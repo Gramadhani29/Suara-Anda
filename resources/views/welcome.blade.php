@@ -7,10 +7,13 @@
         <title>Laravel</title>
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 =======
+=======
+>>>>>>> Stashed changes
   <title>Suara Anda</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -299,5 +302,9 @@
 
 </body>
 
+<<<<<<< Updated upstream
+</html>
+>>>>>>> Stashed changes
+=======
 </html>
 >>>>>>> Stashed changes
