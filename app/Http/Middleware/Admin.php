@@ -27,7 +27,7 @@ class Admin
         }
 
         if($userRole=='user'){
-            return redirect()->route('dashboard');
+            return redirect()->route('pengguna.dashboard');
         }
     }
 }
