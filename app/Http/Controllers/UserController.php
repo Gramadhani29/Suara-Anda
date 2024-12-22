@@ -5,26 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
-
+    // Menampilkan form login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    // Menampilkan form registrasi
     public function showRegisterForm()
     {
         return view('auth.register');
     }
+
+    // Menangani proses registrasi
     public function submitRegisterForm(Request $request)
     {
+        // Validasi data input
         $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:3',
-            'role' => 'required',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:3|confirmed',
+            'role' => 'required', // Pastikan hanya menerima role yang valid
         ]);
 
         // Membuat pengguna baru
@@ -36,40 +42,41 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        // Setelah registrasi berhasil, arahkan pengguna ke halaman login
-        return redirect()->route('login');
+        // Redirect ke halaman login setelah registrasi
+        return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
-    
+
+    // Menangani proses login
     public function submitLoginForm(Request $request)
     {
+        // Validasi data input
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
             'password' => 'required|min:3',
         ]);
-    
-        // Mendefinisikan kredensial
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
-    
-        // Coba autentikasi dengan kredensial
-        if (auth()->attempt($credentials)) {
-            $user = auth()->user();
-    
-            // Redirect berdasarkan role
+
+        // Kredensial autentikasi
+        $credentials = $request->only('email', 'password');
+
+        // Coba autentikasi
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            // Redirect berdasarkan role pengguna
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'user') {
                 return redirect()->route('pengguna.dashboard');
             }
         }
-    
-        // Jika autentikasi gagal, kembalikan ke halaman login dengan pesan error
-        return back()->withErrors(['email' => 'Invalid credentials.'])->withInput();
-    }
-    
 
+        // Jika autentikasi gagal
+        return back()->withErrors([
+            'email' => 'Email atau password tidak valid.',
+        ])->withInput();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -126,3 +133,4 @@ class UserController extends Controller
         //
     }
 }
+
