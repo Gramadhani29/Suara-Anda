@@ -8,10 +8,6 @@ class Artikel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['judul', 'konten', 'user_id'];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['judul', 'konten'];
 }
+
