@@ -9,20 +9,6 @@ use Illuminate\Http\Request;
 
 class ArtikelController extends Controller
 {
-<<<<<<< Updated upstream
-    public function __construct()
-    {
-        // Pastikan middleware hanya diterapkan di controller yang memerlukan
-        $this->middleware('RoleMiddleware'); // Pastikan pengguna sudah login
-        $this->middleware('Admin')->only(['adminIndex', 'create', 'store', 'edit', 'update', 'destroy']); // Admin hanya yang bisa mengakses artikel
-    }
-
-    // Menampilkan daftar artikel untuk admin
-    public function adminIndex()
-    {
-        $artikels = Artikel::all(); // Ambil semua artikel
-        return view('admin.artikels.index', compact('artikels'));
-=======
     /**
      * Create a new controller instance.
      *
@@ -52,7 +38,6 @@ class ArtikelController extends Controller
     // Kirimkan data ke view
     return view('artikels.index', compact('artikels', 'currentPage', 'lastPage', 'total', 'perPage'));
 
->>>>>>> Stashed changes
     }
 
     // Menampilkan form untuk membuat artikel
@@ -64,19 +49,6 @@ class ArtikelController extends Controller
     // Menyimpan artikel baru
     public function store(Request $request)
     {
-<<<<<<< Updated upstream
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-        ]);
-
-        Artikel::create([
-            'judul' => $request->judul,
-            'isi' => $request->isi,
-        ]);
-
-        return redirect()->route('artikels.admin')->with('success', 'Artikel berhasil dibuat!');
-=======
         // Validasi input
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -98,7 +70,6 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::findOrFail($id);
         return view('artikels.show', compact('artikel'));
->>>>>>> Stashed changes
     }
 
     // Menampilkan form untuk mengedit artikel
@@ -111,20 +82,6 @@ class ArtikelController extends Controller
     // Mengupdate artikel
     public function update(Request $request, $id)
     {
-<<<<<<< Updated upstream
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-        ]);
-
-        $artikel = Artikel::findOrFail($id);
-        $artikel->update([
-            'judul' => $request->judul,
-            'isi' => $request->isi,
-        ]);
-
-        return redirect()->route('artikels.admin')->with('success', 'Artikel berhasil diperbarui!');
-=======
         // Validasi input
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -142,18 +99,11 @@ class ArtikelController extends Controller
 
         // Redirect ke halaman daftar artikel dengan pesan sukses
         return redirect()->route('artikels.index')->with('success', 'Artikel berhasil diperbarui.');
->>>>>>> Stashed changes
     }
 
     // Menghapus artikel
     public function destroy($id)
     {
-<<<<<<< Updated upstream
-        $artikel = Artikel::findOrFail($id);
-        $artikel->delete();
-
-        return redirect()->route('artikels.admin')->with('success', 'Artikel berhasil dihapus!');
-=======
         // Temukan artikel berdasarkan ID
         $artikel = Artikel::findOrFail($id);
 
@@ -162,6 +112,5 @@ class ArtikelController extends Controller
 
         // Redirect ke halaman daftar artikel dengan pesan sukses
         return redirect()->route('artikels.index')->with('success', 'Artikel berhasil dihapus.');
->>>>>>> Stashed changes
     }
 }
