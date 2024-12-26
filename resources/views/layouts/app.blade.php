@@ -6,24 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@yield('title')</title>
 
-<<<<<<< Updated upstream
-  @stack('prepend-style')
-  @include('includes.admin.style')
-  @stack('addon-style')
-
-</head>
-
-<body>
-  @include('includes.admin.navbar')
-  @yield('content')
-
-  @stack('prepend-script')
-  @include('includes.admin.script')
-  @stack('addon-script')
-</body>
-
-</html>
-=======
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -53,4 +35,3 @@
         </div>
     </body>
 </html>
->>>>>>> Stashed changes
