@@ -1,5 +1,3 @@
-<!-- resources/views/artikels/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -10,12 +8,18 @@
             @csrf
             <div class="form-group">
                 <label for="judul">Judul</label>
-                <input type="text" name="judul" id="judul" class="form-control" required>
+                <input type="text" name="judul" id="judul" class="form-control" value="{{ old('judul') }}" required>
+                @error('judul')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <div class="form-group mt-3">
                 <label for="konten">Konten</label>
-                <textarea name="konten" id="konten" rows="5" class="form-control" required></textarea>
+                <textarea name="konten" id="konten" rows="5" class="form-control" required>{{ old('konten') }}</textarea>
+                @error('konten')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Simpan</button>
