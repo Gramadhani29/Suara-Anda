@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< Updated upstream
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArtikelController;
 <<<<<<< Updated upstream
 =======
 use App\Http\Controllers\AuthenticatedSessionController;
+>>>>>>> Stashed changes
+=======
+use Livewire\Pages\Admin\Dashboard;
 >>>>>>> Stashed changes
 
 // Route untuk halaman depan
@@ -22,6 +26,7 @@ Route::view('pengguna/dashboard', 'pengguna.dashboard')
     // Route::get('/pengguna/artikels', [ArtikelController::class, 'index'])->name('pengguna.artikels.index');
     // Route::get('/pengguna/artikels/{artikel}', [ArtikelController::class, 'show'])->name('pengguna.artikels.show');
 
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
 // Grup route untuk admin
@@ -39,6 +44,11 @@ Route::view('admin/dashboard', 'admin.dashboard')
     Route::get('/artikels/{artikel}/edit', [ArtikelController::class, 'edit'])->name('artikels.edit');
     Route::put('/artikels/{artikel}', [ArtikelController::class, 'update'])->name('artikels.update');
     Route::delete('/artikels/{artikel}', [ArtikelController::class, 'destroy'])->name('artikels.destroy');
+=======
+Route::middleware(['auth', 'verified', 'user'])->group(function () {
+        Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
+    });
+>>>>>>> Stashed changes
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 >>>>>>> Stashed changes

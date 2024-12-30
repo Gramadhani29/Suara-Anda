@@ -1,4 +1,5 @@
 <?php
+<<<<<<< Updated upstream
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -162,6 +163,82 @@ class ArtikelController extends Controller
 
         // Redirect ke halaman daftar artikel dengan pesan sukses
         return redirect()->route('artikels.index')->with('success', 'Artikel berhasil dihapus.');
+>>>>>>> Stashed changes
+=======
+
+namespace App\Http\Controllers;
+
+use App\Models\Artikel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class ArtikelController extends Controller
+{
+    // Middleware untuk membatasi akses
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin')->except(['index', 'show']);
+    }
+
+    // 📌 Menampilkan semua artikel (Read - Admin & User)
+    public function index()
+    {
+        $artikels = Artikel::all();
+        return view('artikel.index', compact('artikels'));
+    }
+
+    // 📌 Menampilkan detail artikel (Read - Admin & User)
+    public function show($id)
+    {
+        $artikel = Artikel::findOrFail($id);
+        return view('artikel.show', compact('artikel'));
+    }
+
+    // 📌 Menampilkan form tambah artikel (Admin Only)
+    public function create()
+    {
+        return view('artikel.create');
+    }
+
+    // 📌 Menyimpan artikel baru (Admin Only)
+    public function store(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'isi' => 'required'
+        ]);
+
+        Artikel::create($request->all());
+        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil ditambahkan');
+    }
+
+    // 📌 Menampilkan form edit artikel (Admin Only)
+    public function edit($id)
+    {
+        $artikel = Artikel::findOrFail($id);
+        return view('artikel.edit', compact('artikel'));
+    }
+
+    // 📌 Menyimpan perubahan artikel (Admin Only)
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'isi' => 'required'
+        ]);
+
+        $artikel = Artikel::findOrFail($id);
+        $artikel->update($request->all());
+        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diperbarui');
+    }
+
+    // 📌 Menghapus artikel (Admin Only)
+    public function destroy($id)
+    {
+        $artikel = Artikel::findOrFail($id);
+        $artikel->delete();
+        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil dihapus');
 >>>>>>> Stashed changes
     }
 }
